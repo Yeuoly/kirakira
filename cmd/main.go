@@ -16,9 +16,17 @@ func GetProxy() string {
 	return string(proxy)
 }
 
+func GetAccessKey() string {
+	key, err := ioutil.ReadFile("key")
+	if err != nil {
+		return ""
+	}
+	return string(key)
+}
+
 func main() {
 	client := github.GithubClient{}
-	client.Init(GetProxy(), "")
+	client.Init(GetProxy(), GetAccessKey())
 
 	str, err := core.ReplaceMD(&client, "README_template.md")
 
