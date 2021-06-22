@@ -16,14 +16,18 @@ type GithubRepository struct {
 	Watchers int32  `json:"watchers_count"`
 }
 
+func getUserAgent() []string {
+	return []string{
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36 Edg/91.0.864.54",
+		"User-Agent:Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
+		"User-Agent:Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.8.131 Version/11.11",
+		"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; The World)",
+		"User-Agent:Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
+	}
+}
+
 func (client *GithubClient) GetRepository(name string) (GithubRepository, error) {
-	var user_agents []string
-	user_agents = make([]string, 5)
-	user_agents[0] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36 Edg/91.0.864.54"
-	user_agents[1] = "User-Agent:Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"
-	user_agents[2] = "User-Agent:Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.8.131 Version/11.11"
-	user_agents[3] = "User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; The World)"
-	user_agents[4] = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"
+	user_agents := getUserAgent()
 
 	var result GithubRepository
 	url := "https://api.github.com/repos/" + name
